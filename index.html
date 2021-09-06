@@ -6,6 +6,18 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+
+    <!-- Start JQuery Tooltip -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $(document).tooltip({position: {my: "left top", at: "left+30 top", collision: "flipfit"}});
+        });
+    </script>
+    <!-- End JQuery Tooltip -->
+
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css"/>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css"/>
     <link href="//cdnjs.cloudflare.com/ajax/libs/quill/2.0.0-dev.2/quill.snow.min.css" rel="stylesheet">
@@ -19,70 +31,138 @@
         .ql-editor li[data-list=alphabetic]:before {
             content: counter(list-0, lower-alpha) '. ';
         }
+
+        .ql-snow .ql-picker.ql-font {
+            width: 140px;
+        }
+
+        .ql-snow .ql-picker.ql-size, .ql-snow .ql-picker.ql-header {
+            width: 115px;
+            margin-left: 7px;
+        }
+
+        .ql-snow .ql-fill.ql-alphabetic {
+            font-size: 7px;
+            font-weight: 600;
+        }
+
+        /* Start JQuery Tooltip */
+        .ui-widget {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: .8em;
+            letter-spacing: .05em;
+        }
+
+        .ui-tooltip {
+            padding: 6px 8px;
+        }
+
+        .ui-widget.ui-widget-content {
+            border: 1px solid #1b304c;
+        }
+
+        .ui-widget-content {
+            background: #2b4c7d;
+            color: #f0f0f0;
+        }
+
+        .ui-widget-shadow {
+            -webkit-box-shadow: unset;
+            box-shadow: unset;
+        }
+
+        /* End JQuery Tooltip */
     </style>
 </head>
 <body>
 
 <div id="toolbar-container">
     <span class="ql-formats">
-      <select class="ql-font"></select>
-      <select class="ql-size"></select>
+      <select class="ql-font">
+          <option value="serif">Із засічками</option>
+          <option value="sans-serif" selected="selected">Без засічок</option>
+          <option value="monospace">Монорозмірний</option>
+      </select>
+      <select class="ql-size">
+          <option value="small">Маленький</option>
+          <option value="normal" selected="selected">Звичайний</option>
+          <option value="large">Великий</option>
+      </select>
         <select class="ql-header">
-            <option value="1"></option>
-            <option value="2"></option>
-            <option value="3"></option>
+            <option value="1">Заголовок 1</option>
+            <option value="2">Заголовок 2</option>
+            <option value="3">Заголовок 3</option>
         </select>
     </span>
     <span class="ql-formats">
-      <button class="ql-bold"></button>
-      <button class="ql-italic"></button>
-      <button class="ql-underline"></button>
-      <button class="ql-strike"></button>
+      <button class="ql-bold" title="Жирний"></button>
+      <button class="ql-italic" title="Курсив"></button>
+      <button class="ql-underline" title="Підкреслення"></button>
+      <button class="ql-strike" title="Закреслення"></button>
     </span>
     <span class="ql-formats">
-      <select class="ql-color"></select>
-      <select class="ql-background"></select>
+      <select class="ql-color" title="Колір тексту"></select>
+      <select class="ql-background" title="Колір фону"></select>
     </span>
     <span class="ql-formats">
-      <button class="ql-script" value="sub"></button>
-      <button class="ql-script" value="super"></button>
+      <button class="ql-script" value="sub" title="Підрядковий знак"></button>
+      <button class="ql-script" value="super" title="Надрядковий знак"></button>
     </span>
     <span class="ql-formats">
-      <button class="ql-blockquote"></button>
-      <button class="ql-code-block"></button>
+      <button class="ql-blockquote" title="Цитата"></button>
+      <button class="ql-code-block" title="Програмний код"></button>
     </span>
     <span class="ql-formats">
-      <button class="ql-list" value="ordered"></button>
-      <button class="ql-list" value="bullet"></button>
-      <button class="ql-list" value="alphabetic">ABC</button>
-      <button class="ql-indent" value="-1"></button>
-      <button class="ql-indent" value="+1"></button>
+      <button class="ql-list" value="ordered" title="Нумерований список"></button>
+      <button class="ql-list" value="bullet" title="Маркований список"></button>
+      <button class="ql-list" value="alphabetic" title="Алфавітний список">
+          <svg viewBox="0 0 18 18">
+              <line class="ql-stroke" x1="7" x2="15" y1="4" y2="4"></line>
+              <line class="ql-stroke" x1="7" x2="15" y1="9" y2="9"></line>
+              <line class="ql-stroke" x1="7" x2="15" y1="14" y2="14"></line>
+              <text class="ql-fill ql-alphabetic" x="0.7" y="5">a</text>
+              <text class="ql-fill ql-alphabetic" x="0.7" y="11">b</text>
+              <text class="ql-fill ql-alphabetic" x="0.7" y="16">c</text>
+          </svg>
+      </button>
     </span>
     <span class="ql-formats">
-      <select class="ql-align"></select>
+      <button class="ql-indent" value="-1" title="Зменшити відступи"></button>
+      <button class="ql-indent" value="+1" title="Збільшити відступи"></button>
     </span>
     <span class="ql-formats">
-      <button class="ql-link"></button>
-      <button class="ql-image"></button>
-      <button class="ql-video"></button>
-      <button class="ql-formula"></button>
+      <select class="ql-align" title="Вирівнювання"></select>
     </span>
     <span class="ql-formats">
-      <button class="ql-clean"></button>
+      <button class="ql-link" title="Посилання"></button>
+      <button class="ql-image" title="Картинка"></button>
+      <button class="ql-video" title="Відео"></button>
+      <button class="ql-formula" title="Функція"></button>
+      <button id="insert-table" title="Таблиця">
+        <svg viewBox="0 0 18 18">
+              <line class="ql-stroke" x1="1.2" x2="15" y1="3" y2="3"></line>
+              <line class="ql-stroke" x1="1.2" x2="15" y1="4" y2="4"></line>
+              <line class="ql-stroke" x1="1.2" x2="15" y1="9" y2="9"></line>
+              <line class="ql-stroke" x1="1.2" x2="15" y1="15" y2="15"></line>
+              <line class="ql-stroke" x1="1" x2="1" y1="4" y2="14"></line>
+              <line class="ql-stroke" x1="8" x2="8" y1="4" y2="14"></line>
+              <line class="ql-stroke" x1="15" x2="15" y1="4" y2="14"></line>
+          </svg>
+      </button>
     </span>
     <span class="ql-formats">
-        <button id="insert-table">InsertTable</button>
+      <button class="ql-clean" title="Очистити"></button>
     </span>
 </div>
 <div id="editor-container"></div>
-</div>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/quill/2.0.0-dev.3/quill.min.js"></script>
 <script src="//unpkg.com/quill-better-table@1.2.10/dist/quill-better-table.min.js"></script>
-<script src="https://unpkg.com/quill-image-compress@1.2.11/dist/quill.imageCompressor.min.js"></script>
-<script src="node_modules/quill-blot-formatter/dist/quill-blot-formatter.min.js"></script>
+<script src="//unpkg.com/quill-image-compress@1.2.11/dist/quill.imageCompressor.min.js"></script>
+<script src="//unpkg.com/quill-magic-url@3.0.0/dist/index.js"></script>
+<script src="//cdn.jsdelivr.net/npm/quill-blot-formatter/dist/quill-blot-formatter.min.js"></script>
 
 <script>
     Quill.register("modules/imageCompressor", imageCompressor);
@@ -93,25 +173,50 @@
 
     window.onload = function () {
         var quill = new Quill('#editor-container', {
-            placeholder: 'Compose an epic...',
+            placeholder: 'Напишіть щось...',
             modules: {
                 toolbar: '#toolbar-container',
                 table: false,
                 'better-table': {
                     operationMenu: {
                         items: {
+                            insertColumnRight: {
+                                text: 'Вставити стовпець праворуч'
+                            },
+                            insertColumnLeft: {
+                                text: 'Вставити стовпець ліворуч'
+                            },
+                            insertRowUp: {
+                                text: 'Вставити рядок зверху'
+                            },
+                            insertRowDown: {
+                                text: 'Вставити рядок знизу'
+                            },
+                            mergeCells: {
+                                text: "Об'єднати вибрані клітинки"
+                            },
                             unmergeCells: {
-                                text: 'Another unmerge cells name'
-                            }
+                                text: "Роз'єднати вибрані клітинки"
+                            },
+                            deleteColumn: {
+                                text: 'Видалити стовпець'
+                            },
+                            deleteRow: {
+                                text: 'Видалити рядок'
+                            },
+                            deleteTable: {
+                                text: 'Видалити таблицю'
+                            },
                         },
                         color: {
-                            colors: ['green', 'red', 'yellow', 'blue', 'white'],
-                            text: 'Background Colors:'
+                            colors: ['lightcoral', 'gold', 'thistle', 'lightblue', 'lightgreen', 'white'],
+                            text: 'Кольори фону:'
                         }
                     }
                 },
                 imageCompressor: {},
-                blotFormatter: {}
+                blotFormatter: {},
+                magicUrl: true,
             },
             theme: 'snow'
         });
